@@ -5,6 +5,20 @@ const passport = require("passport");
 const OAuth2Strategy = require("passport-google-oauth2").Strategy;
 const User = require("../../models/users_schema"); // Adjust path as needed
 
+// Jwt Token Work
+var jwt = require("jsonwebtoken");
+//  add this in the env file
+const jwt_word = "thisisjwttoken";
+
+
+//  For the Unique Name
+const { v4: uuidv4 } = require('uuid');
+
+// Middleware to generate unique username
+const generateUniqueUserName = (displayName) => {
+    return `${displayName}-${uuidv4()}`;
+};
+
 // Setup session middleware
 router.use(session({
     secret: "YOUR_SECRET_KEY", 
@@ -31,17 +45,19 @@ passport.use(new OAuth2Strategy({
             let user = await User.findOne({ googleId: profile.id });
 
             if (!user) {
+                const userName = generateUniqueUserName(profile.displayName);
                 user = new User({
                     googleId: profile.id,
                     name: profile.displayName,
+                    userName: userName,
                     email: profile.emails[0].value,
                     isGoogleUser:true
                     // image: profile.photos[0].value
                 });
+         
 
                 await user.save();
             }
-
             return done(null, user);
         } catch (error) {
             return done(error, null);
@@ -70,22 +86,31 @@ router.get("/google", passport.authenticate("google", { scope: ["profile", "emai
 
 //  two ways to do this
 // 1. redirect way
-router.get("/google/callback", passport.authenticate("google", {
-    failureRedirect: "http://localhost:3000" // Redirect to login page on failure
-}), (req, res) => {
-    // Successful authentication
-    res.redirect("http://localhost:3000/dashboard"); // Redirect to dashboard or appropriate route
-});
+// router.get("/google/callback", passport.authenticate("google", {
+//     failureRedirect: "http://localhost:3000" // Redirect to login page on failure
+// }), (req, res) => {
+//     // Successful authentication
+//     res.redirect("http://localhost:3000/dashboard"); // Redirect to dashboard or appropriate route
+// });
 
 //  2. my way Here i am sending the user
-// router.get("/google/callback", passport.authenticate("google", {
-//     //  Need to do it later
-//     failureRedirect: "http://localhost:3001/login" // Redirect to login page on failure (if necessary)  
-// }), (req, res) => {
-//     // Handle successful authentication without redirection
-//     // Example: Respond with JSON data or other response
-//     res.status(200).json({ msg: 'Authentication successful', user: req.user ,success:true});
-// });
+router.get("/google/callback", passport.authenticate("google", {
+    //  Need to do it later
+    failureRedirect: "http://localhost:3001/login" // Redirect to login page on failure (if necessary)  
+}), (req, res) => {
+    // Handle successful authentication without redirection
+    // Example: Respond with JSON data or other response
+    let data = {
+        user: {
+          id: req.user.id,
+        },
+      };
+
+    const token = jwt.sign(data, jwt_word);
+
+    // Send the token to the client
+    res.status(200).json({ msg: 'Authentication successful', user: req.user, token, success: true });
+});
 
 
 module.exports = router;

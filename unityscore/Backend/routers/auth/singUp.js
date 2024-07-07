@@ -24,6 +24,8 @@ router.post(
   [
     // Validate name
     body("name").notEmpty().withMessage("Name is required"),
+    // Validate username
+    body("userName").notEmpty().withMessage("Name is required"),
 
     // Validate password
     body("password")
@@ -50,6 +52,7 @@ router.post(
       let hash_pass = await bcrypt.hash(req.body.password, saltRounds);
       const NewUser = new auth({
         name: req.body.name,
+        userName: req.body.userName,
         password: hash_pass,
         email: req.body.email,
         isGoogleUser: false,
