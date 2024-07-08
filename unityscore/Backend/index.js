@@ -67,6 +67,15 @@ app.use('/api/like', require("./routers/like/likePost.js"));
 // 3.2 Unlike a post
 app.use('/api/like', require("./routers/like/unLikePost.js"));
 
+// 4 Profile
+
+//4.1 profile info
+app.use('/api/user', require("./routers/user/userInfo.js"));
+
+//4.2 profile info By Name
+app.use('/api/user', require("./routers/user/allUsersByName.js"));
+
+
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
