@@ -33,29 +33,39 @@ app.use("/api/auth",require("./routers/auth/userVerification.js"))
 // 2.1 Create a new post
 app.use('/api/post', require("./routers/post/createPost.js"));
 
-// Get all posts
-// router.get('/api/post', getPosts);
+// 2.2 Get all posts
+app.use('/api/post', require("./routers/post/showAllPost.js"));
 
-// Get a single post by ID
-// router.get('/api/post', getPostById);
+// 2.3 Get a single post by ID
+app.use('/api/post', require("./routers/post/showPostById.js"));
 
-// Update a post by ID
-// router.put('/api/post', protect, updatePost);
+// 2.4 Update a post by ID
+app.use('/api/post', require("./routers/post/updatePost.js"));
 
-// Delete a post by ID
-// router.delete('/api/post', protect, deletePost);
+// 2.5 Delete a post by ID
+app.use('/api/post', require("./routers/post/deletePost.js"));
 
-// Create a new comment on a post
-// router.post('/api/post', protect, createComment);
+// 2.5 show a post by user
+app.use('/api/post', require("./routers/post/showPostByUser.js"));
 
-// Get comments for a post
-// router.get('/api/post', getComments);
+// 3 Comments
 
-// Like a post
-// router.post('/api/post', protect, likePost);
+// 3.1 Create a new comment on a post
+app.use('/api/comment', require("./routers/comment/createComment.js"));
 
-// Unlike a post
-// router.post('/api/post', protect, unlikePost);
+// 3.2 Get comments for a post
+app.use('/api/comment', require("./routers/comment/getComment.js"));
+
+// 3.2 Delete comments for a post
+app.use('/api/comment', require("./routers/comment/deleteComment.js"));
+
+// 3 Like 
+
+// 3.1 Like a post
+app.use('/api/like', require("./routers/like/likePost.js"));
+
+// 3.2 Unlike a post
+app.use('/api/like', require("./routers/like/unLikePost.js"));
 
 
 app.listen(port, () => {

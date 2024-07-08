@@ -13,10 +13,10 @@ const jwt_word = "thisisjwttoken";
 
 //  For the Unique Name
 const { v4: uuidv4 } = require('uuid');
-
 // Middleware to generate unique username
 const generateUniqueUserName = (displayName) => {
-    return `${displayName}-${uuidv4()}`;
+    const shortUuid = uuidv4().split('-')[0];
+    return `${displayName}-${shortUuid}`;
 };
 
 // Setup session middleware
@@ -49,7 +49,7 @@ passport.use(new OAuth2Strategy({
                 user = new User({
                     googleId: profile.id,
                     name: profile.displayName,
-                    userName: userName,
+                    userName,
                     email: profile.emails[0].value,
                     isGoogleUser:true
                     // image: profile.photos[0].value

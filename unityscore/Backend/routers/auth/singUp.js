@@ -16,6 +16,15 @@ var jwt = require("jsonwebtoken");
 //  add this in the env file
 const jwt_word = "thisisjwttoken";
 
+//  For the Unique Name
+const { v4: uuidv4 } = require('uuid');
+// Middleware to generate unique username
+const generateUniqueUserName = (displayName) => {
+    const shortUuid = uuidv4().split('-')[0];
+    return `${displayName}-${shortUuid}`;
+};
+
+
 let success = false;
 
 // 1. Creating the User (/api/auth/signup)
@@ -23,10 +32,8 @@ router.post(
   "/signUp",
   [
     // Validate name
-    body("name").notEmpty().withMessage("Name is required"),
-    // Validate username
-    body("userName").notEmpty().withMessage("Name is required"),
-
+    body("name").notEmpty().withMessage("Name is      required"),
+    
     // Validate password
     body("password")
       .isLength({ min: 8 })
@@ -50,9 +57,10 @@ router.post(
         return res.json({ msg: "User Exist, Try New Email Id", success });
       }
       let hash_pass = await bcrypt.hash(req.body.password, saltRounds);
+      const userName = generateUniqueUserName(req.body.name);
       const NewUser = new auth({
         name: req.body.name,
-        userName: req.body.userName,
+        userName: userName,
         password: hash_pass,
         email: req.body.email,
         isGoogleUser: false,
