@@ -8,7 +8,7 @@ const userVerification = require("../../middleware/userVerification.js");
 //  schema
 const Post = require("../../models/post_schema.js");
 const Comment = require("../../models/comment_schema.js");
-
+const User = require("../../models/users_schema.js");
 // Success Varaible
 let success = false;
 router.delete("/:postId/deleteComment/:commentId", userVerification, async (req, res) => {
@@ -44,6 +44,25 @@ router.delete("/:postId/deleteComment/:commentId", userVerification, async (req,
     // Remove the comment document from the Comment collection
     await Comment.findByIdAndDelete(commentId);
 
+        // updating the score of the user on every post
+        const score = -2; // Score change value (positive or negative)
+        // Calculate new score ensuring it does not go below zero
+        const user = await User.findById(userId);
+        const newScore = user.scores + score;
+        let updatedUser;
+        if (newScore < 0) {
+          updatedUser= await User.findByIdAndUpdate(
+            userId,
+            { scores: 0 },
+            { new: true }
+          );
+        }else{
+          updatedUser= await User.findByIdAndUpdate(
+            userId,
+            { scores: newScore },
+            { new: true }
+          );
+        }
     success = true;
     res.json({ msg: "Comment deleted", success });
   } catch (error) {

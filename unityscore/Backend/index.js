@@ -13,7 +13,7 @@ app.use(express.json());
 
 //  1 Authentication
 
-// 1.1 SingUp
+// 1.1 SingUp //
 app.use("/api/auth", require("./routers/auth/singUp.js"));
 
 //  1.2 Google User Authentication
@@ -28,7 +28,7 @@ app.use("/api/auth",require("./routers/auth/userVerification.js"))
 //  1.5 For logout (Do it in the last)
 // app.use("/api/auth",require("./routers/auth/logOut.js"))
 
-// 2 Post
+// 2 Post //
 
 // 2.1 Create a new post
 app.use('/api/post', require("./routers/post/createPost.js"));
@@ -48,7 +48,7 @@ app.use('/api/post', require("./routers/post/deletePost.js"));
 // 2.5 show a post by user
 app.use('/api/post', require("./routers/post/showPostByUser.js"));
 
-// 3 Comments
+// 3 Comments //
 
 // 3.1 Create a new comment on a post
 app.use('/api/comment', require("./routers/comment/createComment.js"));
@@ -59,7 +59,7 @@ app.use('/api/comment', require("./routers/comment/getComment.js"));
 // 3.2 Delete comments for a post
 app.use('/api/comment', require("./routers/comment/deleteComment.js"));
 
-// 3 Like 
+// 3 Like //
 
 // 3.1 Like a post
 app.use('/api/like', require("./routers/like/likePost.js"));
@@ -67,16 +67,25 @@ app.use('/api/like', require("./routers/like/likePost.js"));
 // 3.2 Unlike a post
 app.use('/api/like', require("./routers/like/unLikePost.js"));
 
-// 4 Profile
+// 4 Profile //
 
-//4.1 profile info
+// 4.1 user info
 app.use('/api/user', require("./routers/user/userInfo.js"));
 
-//4.2 profile info By Name
+// 4.2 user info By Name search
 app.use('/api/user', require("./routers/user/allUsersByName.js"));
+
+// 4.3 update the score (in future for the admin dashbord )
+// app.use('/api/user', require("./routers/user/updateScore.js"));
+
+// 4.4 update the score (in future for the admin dashbord )
+app.use('/api/user', require("./routers/user/updateUserName.js"));
 
 
 
 app.listen(port, () => {
     console.log(`Example app listening on port ${port}`)
   })
+
+  // update the username
+  // achievemnet functionality

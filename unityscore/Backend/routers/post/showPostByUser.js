@@ -9,9 +9,9 @@ const Post = require("../../models/post_schema.js");
 
 // Success Varaible
 let success = false;
-router.get("/showPostByUser", userVerification, async (req, res) => {
+router.get("/showPostByUser/:userId", userVerification, async (req, res) => {
   try {
-    const posts = await Post.find({ userId: req.user.id }).sort({ updatedAt: -1 });
+    const posts = await Post.find({ userId: req.params.userId }).sort({ updatedAt: -1 });
 
     // res.send(new_note);
     success = true;

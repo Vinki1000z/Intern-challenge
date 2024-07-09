@@ -19,7 +19,7 @@ router.get('/userInfo/:userId', userVerification, async (req, res) => {
     res.status(200).json({msg:"This is the user",user,success});
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Server Error' });
+    res.json({ msg: error.message,success });
   }
 });
 
