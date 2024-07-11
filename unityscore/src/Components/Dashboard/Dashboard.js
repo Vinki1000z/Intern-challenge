@@ -21,6 +21,7 @@ export default function Dashboard() {
                 <Route path="/" element={<Postedpost />} />
                 {/* user own Post */}
                 <Route path="/yourPost" element={<YourPost />} />
+
               </Routes>
             </div>
           </div>

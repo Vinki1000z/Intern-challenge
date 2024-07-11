@@ -15,7 +15,7 @@ export default function PostedPost() {
             flexDirection: "column",
           }}
         >
-          <Post/>
+          <Post width={"40rem"} />
         </div>
       </div>
     </>
