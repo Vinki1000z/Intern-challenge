@@ -54,10 +54,6 @@ router.post(
       const score = 2; // Score change value (positive or negative)
       // Calculate new score ensuring it does not go below zero
       const newScore = user.scores + score;
-      if (newScore < 0) {
-        return res.status(400).json({ message: "Score cannot go below zero" });
-      }
-  
       // Use findByIdAndUpdate to update the user score
       await User.findByIdAndUpdate(
         userId,
@@ -74,7 +70,7 @@ router.post(
       }));
       await user.save();
       success=true;
-      res.json({ msg: "Comment on Post", success});
+      res.json({ msg: "Comment on Post",post ,success});
     } catch (error) {
       res.json({ msg: error.message,success });
     }

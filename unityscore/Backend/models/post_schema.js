@@ -14,6 +14,10 @@ const postSchema = Schema({
     type: String,
     required: true
   },
+  image: {
+    type: String, // Store the image URL or path as a string
+    required: false // Make it optional
+  },
   commentsId: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Comment'

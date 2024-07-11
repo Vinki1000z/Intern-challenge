@@ -1,6 +1,19 @@
 const express = require("express");
 const router = express.Router();
-// models
+const multer = require('multer');
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, './Backend/upload/postImages');
+  },
+  // destination: '../../upload/postImages',
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname);
+  }
+});
+// for images
+
+const upload = multer({ storage });
 
 // Middleware
 const userVerification = require("../../middleware/userVerification.js");
@@ -19,7 +32,7 @@ const achievements = require("../achievements/achievements.js")
 let success=false;
 router.post(
   "/createPost",
-  userVerification,
+ userVerification, upload.single('postImage'),
   [
     // Validate content
     body("content")
@@ -32,6 +45,7 @@ router.post(
       .withMessage("Title must be at least 8 characters long"),
   ],
   async (req, res) => {
+    // console.log(req.file);
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
@@ -44,10 +58,12 @@ router.post(
       }
   
       const { content, title } = req.body;
+      const image = req.file ? req.file.path : null;
       const post = new Post({
         title,
         content,
         userId: req.user.id,
+        image
       });
 
       await post.save();
@@ -56,10 +72,7 @@ router.post(
       const score = 10; // Score change value (positive or negative)
       // Calculate new score ensuring it does not go below zero
       const newScore = user.scores + score;
-      if (newScore < 0) {
-        return res.status(400).json({ message: "Score cannot go below zero" });
-      }
-  
+
       // Use findByIdAndUpdate to update the user score
       const updatedUser = await User.findByIdAndUpdate(
         userId,
