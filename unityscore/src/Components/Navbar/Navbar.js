@@ -1,6 +1,7 @@
 import React from 'react'
-
+import { Link , useLocation} from "react-router-dom";
 export default function Navbar() {
+  const location = useLocation();
   return (
     <>
     <nav
@@ -17,7 +18,7 @@ export default function Navbar() {
           <img src="https://preview.webpixels.io/web/img/logos/clever-primary.svg" alt="..."/>
         </a>
         {/* User menu (mobile) */}
-        <div className="navbar-user d-lg-none">
+        <div className="navbar-user d-lg-none" >
           {/* Dropdown */}
           <div className="dropdown">
             {/* Toggle */}
@@ -33,37 +34,45 @@ export default function Navbar() {
             {/* Menu */}
             <div className="dropdown-menu dropdown-menu-end" aria-labelledby="sidebarAvatar">
               <a href="/" className="dropdown-item">Profile</a>
-              <a href="/" className="dropdown-item">Settings</a>
-              <a href="/" className="dropdown-item">Billing</a>
-              <hr className="dropdown-divider"/>
+              {/* <a href="/" className="dropdown-item">Settings</a> */}
               <a href="/" className="dropdown-item">Logout</a>
             </div>
           </div>
         </div>
         {/* Collapse */}
+        {/*  herer add the active class according to the page */}
         <div className="collapse navbar-collapse" id="sidebarCollapse">
           {/* Navigation */}
           <ul className="navbar-nav">
             <li className="nav-item">
-              <a className="nav-link" href="/">
-                <i className="bi bi-house"></i> Dashboard
-              </a>
+              <Link to="/" className={`nav-link ${
+                    location.pathname === "/" ? "active" : ""
+                  }`} >
+              <i className="bi bi-house"></i> Dashboard
+                </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/">
-                <i className="bi bi-bar-chart"></i> Your Post
-              </a>
+            <Link to="/yourPost" className={`nav-link ${
+                    location.pathname === "/yourPost" ? "active" : ""
+                  }`} >
+              <i className="bi bi-house"></i> Your Post
+                </Link>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/">
+              {/* <a className="nav-link" href="/">
                 <i className="bi bi-search"></i> Search
                 <span
                   className="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto">6</span>
-              </a>
+              </a> */}
+              <Link to="/search" className={`nav-link ${
+                    location.pathname === "/search" ? "active" : ""
+                  }`} >
+              <i className="bi bi-house"></i> search
+                </Link>
             </li>
           </ul>
           {/* Divider */}
-          <hr className="navbar-divider my-5 opacity-20"/>
+          {/* <hr className="navbar-divider my-5 opacity-20"/> */}
 
           {/* required in the future to show the follower */}
           {/* Navigation */}

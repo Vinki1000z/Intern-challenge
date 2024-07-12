@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import AddPost from "./AddPost";
 
-import { Link} from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 export default function Header() {
+  const location = useLocation();
   const [modalOpen, setModalOpen] = useState(false);
   const closeModal = (val) => {
     setModalOpen(val);
@@ -39,18 +40,33 @@ export default function Header() {
             {/* Nav */}
             <ul className="nav nav-tabs mt-4 overflow-x border-0">
               <li className="nav-item ">
-                <Link to="/" className="nav-link active">
+                <Link
+                  to="/"
+                  className={`nav-link ${
+                    location.pathname === "/" ? "active" : ""
+                  }`}
+                >
                   All Post
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/yourPost" className="nav-link font-regular">
+                <Link
+                  to="/yourPost"
+                  className={`nav-link ${
+                    location.pathname === "/yourPost" ? "active" : ""
+                  }`}
+                >
                   Your Post
                 </Link>
               </li>
               <li className="nav-item">
-                <Link to="/" className="nav-link font-regular">
-                  Search
+                <Link
+                  to="/search"
+                  className={`nav-link ${
+                    location.pathname === "/search" ? "active" : ""
+                  }`}
+                >
+                  search
                 </Link>
               </li>
             </ul>
