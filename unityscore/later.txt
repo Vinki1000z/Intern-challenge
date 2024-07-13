@@ -3,9 +3,7 @@
 
 
 remaining work:
-1. seach 
-2. edit
-3. profile
+1. seach append
 
 
 3.there is error in the div

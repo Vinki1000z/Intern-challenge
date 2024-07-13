@@ -2,8 +2,9 @@ import React, { useContext, useState } from "react";
 import AddPost from "./AddPost";
 import { Link, useLocation } from "react-router-dom";
 //  importing the context to showSearch
-import SearchModalContext from "../../createcontext/SearchModal/SearchModalContext";
+
 import HideCardContext from "../../createcontext/HideCardContext/HideCardContext";
+import SearchModal from "./SearchModal";
 
 export default function Header() {
   const location = useLocation();
@@ -12,7 +13,11 @@ export default function Header() {
     setPostModalOpen(val);
   };
 
-  const { handleShow } = useContext(SearchModalContext);
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   const { handleShowCard } = useContext(HideCardContext);
 
   return (
@@ -82,6 +87,7 @@ export default function Header() {
         </div>
         {postModalOpen && <AddPost closeModal={closeModal} />}
       </header>
+        {show && <SearchModal show={show} handleClose={handleClose}/>}
     </>
   );
 }

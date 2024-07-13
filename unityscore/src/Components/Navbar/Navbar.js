@@ -1,10 +1,15 @@
-import React, { useContext } from "react";
+import React, { useContext,useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import SearchModalContext from "../../createcontext/SearchModal/SearchModalContext";
 import HideCardContext from "../../createcontext/HideCardContext/HideCardContext";
+import SearchModal from "../Dashboard/SearchModal";
+
 export default function Navbar() {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const location = useLocation();
-  const { handleShow } = useContext(SearchModalContext);
+
   const { handleShowCard } = useContext(HideCardContext);
   return (
     <>
@@ -151,6 +156,7 @@ export default function Navbar() {
             </ul>
           </div>
         </div>
+      {show && <SearchModal show={show} handleClose={handleClose}/>}
       </nav>
     </>
   );
