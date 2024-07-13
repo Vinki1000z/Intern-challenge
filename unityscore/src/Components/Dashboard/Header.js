@@ -1,13 +1,20 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import AddPost from "./AddPost";
-
 import { Link, useLocation } from "react-router-dom";
+//  importing the context to showSearch
+import SearchModalContext from "../../createcontext/SearchModal/SearchModalContext";
+import HideCardContext from "../../createcontext/HideCardContext/HideCardContext";
+
 export default function Header() {
   const location = useLocation();
-  const [modalOpen, setModalOpen] = useState(false);
+  const [postModalOpen, setPostModalOpen] = useState(false);
   const closeModal = (val) => {
-    setModalOpen(val);
+    setPostModalOpen(val);
   };
+
+  const { handleShow } = useContext(SearchModalContext);
+  const { handleShowCard } = useContext(HideCardContext);
+
   return (
     <>
       <header className="bg-surface-primary border-bottom pt-6">
@@ -25,7 +32,7 @@ export default function Header() {
                     href="/"
                     onClick={(e) => {
                       e.preventDefault();
-                      setModalOpen(true);
+                      setPostModalOpen(true);
                     }}
                     className="btn d-inline-flex btn-sm btn-primary mx-1"
                   >
@@ -44,7 +51,7 @@ export default function Header() {
                   to="/"
                   className={`nav-link ${
                     location.pathname === "/" ? "active" : ""
-                  }`}
+                  }`}  onClick={()=>handleShowCard(true)}
                 >
                   All Post
                 </Link>
@@ -54,25 +61,26 @@ export default function Header() {
                   to="/yourPost"
                   className={`nav-link ${
                     location.pathname === "/yourPost" ? "active" : ""
-                  }`}
+                  }`} onClick={()=>handleShowCard(true)}
                 >
                   Your Post
                 </Link>
               </li>
               <li className="nav-item">
-                <Link
-                  to="/search"
-                  className={`nav-link ${
-                    location.pathname === "/search" ? "active" : ""
-                  }`}
+                <div
+                  className="nav-link"
+                  href={location.pathname}
+                  variant="primary"
+                  onClick={handleShow}
+                  style={{ cursor: "pointer" }}
                 >
-                  search
-                </Link>
+                  Search
+                </div>
               </li>
             </ul>
           </div>
         </div>
-        {modalOpen && <AddPost closeModal={closeModal} />}
+        {postModalOpen && <AddPost closeModal={closeModal} />}
       </header>
     </>
   );

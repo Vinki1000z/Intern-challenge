@@ -1,12 +1,12 @@
 import React from "react";
 
-export default function Card() {
+export default function Card(props) {
   
   return (
     <>
       <div className="row g-6 mb-6">
-        <div className="col-xl-3 col-sm-6 col-12">
-          <div className="card shadow border-0">
+        <div className="col-xl-3 col-sm-6 col-12 ">
+          <div className="card shadow border-0" style={{ backgroundColor: props.style ? "#f5f9fc" : "white" }}>
             <div className="card-body">
               <div className="row">
                 <div className="col">
@@ -34,8 +34,8 @@ export default function Card() {
             </div>
           </div>
         </div>
-        <div className="col-xl-3 col-sm-6 col-12">
-          <div className="card shadow border-0">
+        <div className="col-xl-3 col-sm-6 col-12 " >
+          <div className="card shadow border-0" style={{ backgroundColor: props.style ? "#f5f9fc" : "white" }}>
             <div className="card-body">
               <div className="row">
                 <div className="col">
