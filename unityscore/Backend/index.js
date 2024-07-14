@@ -1,10 +1,16 @@
 const express = require("express");
 const app = express();
 const port = 5000;
-
 // connecting the db
 const connect = require("./db.js");
 connect();
+
+// cors setup
+const cors=require("cors");
+app.use(cors());
+
+app.use("/Backend/upload/postImages",express.static(__dirname+'/upload/postImages'));
+
 
 //  Point 1. add this
 // Middleware to parse JSON bodies
@@ -66,6 +72,9 @@ app.use('/api/like', require("./routers/like/likePost.js"));
 
 // 3.2 Unlike a post
 app.use('/api/like', require("./routers/like/unLikePost.js"));
+
+// 3.3 is liked post
+app.use('/api/like', require("./routers/like/isLikedPost.js"));
 
 // 4 Profile //
 

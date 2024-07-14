@@ -1,6 +1,12 @@
-import React from "react";
+import React,{useContext,useEffect} from "react";
 import Post from "./Post";
+import DashboardContext from "../../createcontext/DashboardContext/DashboardContext";
 export default function AllPost() {
+  const { Posts,AllPost } = useContext(DashboardContext);
+  useEffect(() => {
+    AllPost();
+    // eslint-disable-next-line
+  }, [Post]);
   return (
     <>
       <div className="card-header">
@@ -15,7 +21,11 @@ export default function AllPost() {
             flexDirection: "column",
           }}
         >
-          <Post width={"40rem"} />
+          {Posts &&
+            Posts.map((singlePost) => (
+              <Post key={singlePost._id} singlePost={singlePost} width={"40rem"}/>
+            ))}
+          {/* <Post width={"40rem"} /> */}
         </div>
       </div>
     </>

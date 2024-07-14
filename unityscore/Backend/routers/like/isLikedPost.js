@@ -5,7 +5,8 @@ const router = express.Router();
 // Middleware
 const userVerification = require("../../middleware/userVerification.js");
 
-
+// importing express validators
+const { body, validationResult } = require("express-validator");
 
 
 //  schema
@@ -15,8 +16,8 @@ const Like = require("../../models/likes_schema.js");
 
 // Success Varaible
 let success=false;
-router.post(
-  "/:postId/likePost",
+router.get(
+  "/:postId/isLikePost",
   userVerification,
   async (req, res) => {
     try {
@@ -34,20 +35,17 @@ router.post(
           res.status(404);
           throw new Error('Post not found');
         }
-  const like = new Like({
-    userId,
-    postId
-  });
-
-  await like.save();
-
-  // Add the like to the post's likes array
-  post.likesId.push(like._id);
-  await post.save();
-  success=true;
-  res.status(201).json({ msg: 'Post liked' ,liked:true});
+      
+        // Check if the user had liked the post
+        const alreadyLiked = await Like.findOne({ userId: userId, postId: postId });
+        success=true;
+        if (alreadyLiked) {
+        return res.json({ msg: "Post liked", success,liked:true});
+        }else{
+          return res.json({ msg: "Post not liked", success,liked:false});
+        }
     } catch (error) {
-      res.json({ msg: error.message,success,role:"warning" });
+      res.json({ msg: error.message,success,role:"success" });
     }
   }
 );

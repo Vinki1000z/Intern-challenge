@@ -1,6 +1,36 @@
-import React from "react";
+import React,{useEffect,useContext, useState} from "react";
+import DashboardContext from "../../createcontext/DashboardContext/DashboardContext";
 
-export default function Post(props) {
+export default function Post(props) {  
+  const baseUrl = "http://localhost:5000";
+  const imagePath = new URL(props.singlePost.image, baseUrl).href;
+  const { LikePost,UnLikePost,IsLikedPost} = useContext(DashboardContext);
+  const [currLiked,setCurrLiked]=useState();
+  const [likeCount, setLikeCount] = useState(props.singlePost.likesId.length);
+  const handleLikePost=(PostId)=>{
+    LikePost(PostId);
+    setCurrLiked(true);
+    setLikeCount(likeCount+1);
+  }
+
+  const handleUnLikePost=(PostId)=>{
+    UnLikePost(PostId);
+    setCurrLiked(false);
+    setLikeCount(likeCount-1);
+  }
+
+
+  useEffect(() => {
+    const checkIfLiked = async () => {
+      const response = await IsLikedPost(props.singlePost._id);
+      setCurrLiked(response);
+    };
+
+    checkIfLiked();
+    // eslint-disable-next-line 
+  }, []);
+
+
   return (
     <>
       <div
@@ -37,26 +67,23 @@ export default function Post(props) {
                   className="d-block text-sm font-semibold"
                   style={{ fontSize: "1rem" }}
                 >
-                  Marie Claire
+                  {props.singlePost.userId.name}
                 </span>
-                <span className="d-block text-xs text-muted font-regular">
+                {/* <span className="d-block text-xs text-muted font-regular">
                   Paris, FR
-                </span>
+                </span> */}
               </div>
             </a>
           </div>
           {/* Body */}
           <div className="card-body">
-            <h5 className="card-title">Card title</h5>
-            <p className="card-text">
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </p>
+            <h5 className="card-title">{props.singlePost.title}</h5>
+            <p className="card-text">{props.singlePost.content}</p>
           </div>
           {/* img Box */}
           <div className="imgBox container">
             <img
-              src="./img/Dashboard/ss.png"
+              src={imagePath}
               className="card-img-top"
               style={{ borderRadius: "15px" }}
               alt="..."
@@ -65,20 +92,34 @@ export default function Post(props) {
           {/* card-bottom */}
           <div
             className="container card-bottom"
-            style={{ margin: "13px 0px 11px 0px" }}
-          >
-            <img
-              src="./img/Dashboard/like.png"
-              className="card-img-top img-fluid"
-              alt="..."
-              style={{ width: "30px", height: "33px", marginRight: "15px" }}
-            />
-            <img
-              src="./img/Dashboard/comment.png"
-              className="card-img-top"
-              alt="..."
-              style={{ width: "30px", height: "35px" }}
-            />
+            style={{ margin: "13px 0px 11px 0px" ,display:"flex",flexDirection:"row"}}
+          > 
+            <div className="like" style={{display:"flex",flexDirection:"column",alignItems:'center',marginRight:"15px"}}>
+              <img
+                className="card-img-top img-fluid"
+                alt="..."
+                src={currLiked?"./img/Dashboard/likeFilled.png" : "./img/Dashboard/like.png"}
+                onClick={!currLiked? ()=>handleLikePost(props.singlePost._id):()=>handleUnLikePost(props.singlePost._id)}
+                
+                style={{ width: "30px", height: "33px" ,cursor:"pointer"}}
+          
+              />
+              <span className="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto" style={{marginTop:"10px"}}>
+                {likeCount}
+              </span>
+            </div>
+
+            <div className="comments" style={{display:"flex",flexDirection:"column",alignItems:'center'}}>
+              <img
+                src="./img/Dashboard/comment.png"
+                className="card-img-top"
+                alt="..."
+                style={{ width: "30px", height: "35px" ,cursor:"pointer"}}
+              />
+              <span className="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto" style={{marginTop:"10px"}}>
+                {props.singlePost.commentsId.length}
+              </span>
+            </div>
           </div>
         </div>
         {props.showUpdate && (

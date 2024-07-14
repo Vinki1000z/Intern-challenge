@@ -33,10 +33,9 @@ router.post("/:postId/unLikePost", userVerification, async (req, res) => {
     // Check if the user has already liked the post
     const like = await Like.findOne({ userId: userId, postId: postId });
 
-    if (!like) {
-      res.status(400);
-      throw new Error("Post not liked yet");
-    }
+    // if (!like) {
+    //   return res.json({ msg: "Post not liked", success});
+    // }
 
     // Remove the like from the post's likes array
     post.likesId.pull(like._id);
@@ -46,7 +45,7 @@ router.post("/:postId/unLikePost", userVerification, async (req, res) => {
     await Like.findByIdAndDelete(like._id);
 
     success = true;
-    res.status(201).json({ msg: "Post Unliked" });
+    res.status(201).json({ msg: "Post Unliked" ,unliked:false});
   } catch (error) {
     res.json({ msg: error.message, success });
   }
