@@ -25,7 +25,7 @@ router.delete("/:postId/deleteComment/:commentId", userVerification, async (req,
     
     // Check if the comment exists
     if (!comment) {
-        return res.json({msg:"Comment not found",success});
+        return res.json({msg:"Comment not found",success:false});
     }
 
     // Check if the user is the owner of the comment or the post
@@ -64,9 +64,9 @@ router.delete("/:postId/deleteComment/:commentId", userVerification, async (req,
           );
         }
     success = true;
-    res.json({ msg: "Comment deleted", success });
+    res.json({ msg: "Comment deleted", success , role:"success"});
   } catch (error) {
-    res.json({ msg: error.message, success });
+    res.json({ msg: error.message, success ,role:"warning"});
   }
 });
 

@@ -4,10 +4,12 @@ import Alertcontext from "../Alert/AlertContext";
 export default function DashboardState(props) {
 const network = "http://localhost:5000";
   const {showalert}=useContext(Alertcontext);
+
   // posts state
   const [Posts, setPost] = useState([]);
-  // isLikedPost
+  // isLikedPost state
   const [isLiked, setIsLiked] = useState();
+
   //  Section For Post //
 
   //   1. For showing All Post
@@ -49,6 +51,30 @@ const network = "http://localhost:5000";
     showalert({grole:json.role,gshow:true,gmsg:json.msg})
   };
 
+  //  3. Show post by userID
+  const ShowPostByUserID = async (userId) => {
+    const response = await fetch(`${network}/api/post/showPostByUser/${userId}`, {
+      method: "GET",
+      headers: {
+        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI"
+      },
+
+    });
+    const json = await response.json();
+    console.log(json);
+  }
+
+  // 4 . show post by postId
+  const ShowPostByPostId = async (postId) => {
+    const response = await fetch(`${network}/api/post/showPostById/${postId}`, {
+      method: "GET",
+      headers: {
+        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI"
+      },
+    })
+    const json = await response.json();
+    console.log(json);
+  }
 
   //  Section For Comments //
 
@@ -97,13 +123,12 @@ const network = "http://localhost:5000";
       },
     });
     const json=await response.json();
-    console.log(json);
-    // if(json.success){
-    //   showalert({grole:json.role,gshow:true,gmsg:json.msg})
-    // }
-    // else{
-    //   showalert({grole:json.role,gshow:true,gmsg:json.msg})
-    // }
+    if(json.success){
+      showalert({grole:json.role,gshow:true,gmsg:json.msg})
+    }
+    else{
+      showalert({grole:json.role,gshow:true,gmsg:json.msg})
+    }
   }
 
   //  Section For Likes  //
@@ -156,16 +181,39 @@ const network = "http://localhost:5000";
 
   //  Section For the Profile of user //
 
-  //  Section For user Specific Post //
+  //  1. finding the user id with the help of userverfication route
+  
+
+  //  2. get user profile
+  const GetUserProfile=async(userId)=>{
+    const response = await fetch(`${network}/api/user/userInfo/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI",
+      },
+    })
+    const json = await response.json();
+    console.log(json);
+  }
+
+  //  Section For Search //
+
+  // 1. search
+
+
   return (
  
     <>
       <DashboardContext.Provider
         value={{
-          // 1. Post(state) , Allpost , CreatePost
+          // 1. Post(state) , Allpost , CreatePost , ShowPostByUserID , ShowPostByPostId
           Posts,
           AllPost,
           CreatePost,
+          ShowPostByUserID,
+          ShowPostByPostId,
 
           //   2. Likepost , unlikepost  , islikde
           LikePost,
@@ -176,7 +224,10 @@ const network = "http://localhost:5000";
           // 3. AllComments , CreateComment , DeleteComment
           AllComments,
           CreateComment,
-          DeleteComment
+          DeleteComment,
+
+          // 4. GetUserProfile , 
+          GetUserProfile
         }}
       >
         {props.children}

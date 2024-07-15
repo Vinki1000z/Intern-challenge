@@ -144,7 +144,7 @@ export default function Post(props) {
           ></i>
         )}
       </div>
-      {showCommentModal && <CommentModal postId={props.singlePost._id} comments={comment} handleClose={handleClose} show={showCommentModal}/>}
+      {showCommentModal && <CommentModal postId={props.singlePost._id} userId={props.singlePost.userId._id} comments={comment} handleClose={handleClose} show={showCommentModal}/>}
     </>
   );
 }

@@ -2,27 +2,26 @@ import React, { useState } from "react";
 import Alertcontext from "./AlertContext";
 
 function Alertstate(props) {
-  const [role, setrole] = useState("");
-  const [msg, setmsg] = useState("");
-  const [show, setshow] = useState("");
+  const [role, setRole] = useState("");
+  const [msg, setMsg] = useState("");
+  const [show, setShow] = useState(false);
+
   const showalert = (alert) => {
-    const { grole, gmsg ,gshow} = alert;
-    setrole(grole);
-    setmsg(gmsg);
-    setshow(gshow);
-    // console.log(alert);
+    const { grole, gmsg, gshow } = alert;
+    setRole(grole);
+    setMsg(gmsg);
+    setShow(gshow);
+
+    // Automatically hide the alert after 1 second
+    setTimeout(() => {
+      setShow(false);
+    }, 1000);
   };
 
   return (
-    <>
-      <Alertcontext.Provider value={{showalert}}>
-        
-       { show &&
-        <div
-          className={`alert alert-${role}  alert-dismissible`}
-          
-          role="alert"
-        >
+    <Alertcontext.Provider value={{ showalert }}>
+      {show && (
+        <div className={`alert alert-${role} alert-dismissible`} role="alert">
           {msg}
           <button
             type="button"
@@ -31,11 +30,9 @@ function Alertstate(props) {
             aria-label="Close"
           ></button>
         </div>
-}
-        {props.children}
-
-      </Alertcontext.Provider>
-    </>
+      )}
+      {props.children}
+    </Alertcontext.Provider>
   );
 }
 

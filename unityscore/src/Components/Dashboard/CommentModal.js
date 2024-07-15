@@ -4,7 +4,7 @@ import Modal from "react-bootstrap/Modal";
 import DashboardContext from "../../createcontext/DashboardContext/DashboardContext";
 
 export default function CommentModal(props) {
-  const { CreateComment,DeleteComment } = useContext(DashboardContext);
+  const { CreateComment, DeleteComment } = useContext(DashboardContext);
   const [newComment, setNewComment] = useState({ content: "" });
 
   const handleonchange = (e) => {
@@ -13,13 +13,16 @@ export default function CommentModal(props) {
 
   const handleonSubmit = (e) => {
     e.preventDefault();
+    if (newComment.content.length < 1) {
+      return; // Prevent submission if the content is less than 1 character
+    }
     CreateComment(props.postId, newComment);
     setNewComment({ content: "" });
   };
-  const handleonDelete=()=>{
-    // DeleteComment(props.postId,props.comment._id)
-    console.log("clicked");
-  }
+
+  const handleonDelete = (postId, commentId) => {
+    DeleteComment(postId, commentId);
+  };
 
   return (
     <>
@@ -34,20 +37,31 @@ export default function CommentModal(props) {
             </label>
             <input
               type="text"
-              className="form-control"
+              className={`form-control ${
+                newComment.content.length < 1 ? "is-invalid" : "is-valid"
+              }`}
               id="content"
               name="content"
               value={newComment.content}
               onChange={handleonchange}
               placeholder="Enter Your Comment"
             />
+            {newComment.content.length < 1 && (
+              <div className="invalid-feedback">
+                Comment must be at least 1 character.
+              </div>
+            )}
           </div>
           <Modal.Footer>
             <Button variant="secondary" onClick={props.handleClose}>
               Cancel
             </Button>
-            <Button variant="primary" onClick={handleonSubmit}>
-             Post Comment
+            <Button
+              variant="primary"
+              onClick={handleonSubmit}
+              disabled={newComment.content.length < 1}
+            >
+              Post Comment
             </Button>
           </Modal.Footer>
           <div className="mb-3 my-7">
@@ -88,7 +102,17 @@ export default function CommentModal(props) {
                             {comment.userId.name}
                           </span>
                         </div>
-                        <i className="fa fa-trash" aria-hidden="true" onClick={handleonDelete} style={{cursor:"pointer"}}></i>
+                        {comment.userId._id === props.userId && (
+                          <i
+                            className="fa fa-trash mx-10"
+                            aria-hidden="true"
+                            alt="delete the comment"
+                            onClick={() =>
+                              handleonDelete(props.postId, comment._id)
+                            }
+                            style={{ cursor: "pointer" }}
+                          ></i>
+                        )}
                       </div>
                       {/* Comment Text */}
                       <div>{comment.content}</div>
