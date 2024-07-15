@@ -70,9 +70,9 @@ router.post(
       }));
       await user.save();
       success=true;
-      res.json({ msg: "Comment on Post",post ,success});
+      res.json({ msg: "Comment on Post",post ,success,role:"success"});
     } catch (error) {
-      res.json({ msg: error.message,success });
+      res.json({ msg: error.message,success,role:"warning" });
     }
   }
 );

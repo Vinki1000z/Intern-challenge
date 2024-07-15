@@ -6,7 +6,7 @@ export default function AllPost() {
   useEffect(() => {
     AllPost();
     // eslint-disable-next-line
-  }, [Post]);
+  }, [Posts]);
   return (
     <>
       <div className="card-header">
@@ -22,7 +22,8 @@ export default function AllPost() {
           }}
         >
           {Posts &&
-            Posts.map((singlePost) => (
+            Posts.map((singlePost) => 
+              (
               <Post key={singlePost._id} singlePost={singlePost} width={"40rem"}/>
             ))}
           {/* <Post width={"40rem"} /> */}

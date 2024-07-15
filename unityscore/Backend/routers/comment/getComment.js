@@ -24,7 +24,7 @@ router.get(
             return res.status(404).json({ msg: "Post Not Found", success });
         }
         const postId = req.params.postId;
-        const comments = await Comment.find({ postId: postId }).populate('userId', 'name email');
+        const comments = await Comment.find({ postId: postId }).sort({ createdAt: -1 }).populate('userId', 'name email');
         success=true;
         if(comments.length===0){
             return res.json({ msg: "No Comments yet", success });

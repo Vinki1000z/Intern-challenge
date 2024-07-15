@@ -32,16 +32,16 @@ const achievements = require("../achievements/achievements.js")
 let success=false;
 router.post(
   "/createPost",
- userVerification, upload.single('postImage'),
+ userVerification, upload.single('image'),
   [
     // Validate content
     body("content")
-      .isLength({ min: 4 })
+      .isLength({ min: 5 })
       .withMessage("Title must be at least 4 characters long"),
 
     // Validate title
     body("title")
-      .isLength({ min: 4 })
+      .isLength({ min: 10 })
       .withMessage("Title must be at least 8 characters long"),
   ],
   async (req, res) => {
@@ -59,6 +59,9 @@ router.post(
   
       const { content, title } = req.body;
       const image = req.file ? req.file.path : null;
+      // console.log("image",image);
+      // console.log(content);
+      // console.log(title);
       const post = new Post({
         title,
         content,
@@ -91,9 +94,9 @@ router.post(
       await user.save();
       // res.send(new_note);
       success=true;
-      res.json({ msg: "Post Created Successfully", post,updatedUser,success});
+      res.json({ msg: "Post Created Successfully", post,updatedUser,success,role:"success"});
     } catch (error) {
-      res.json({ msg: error.message,success });
+      res.json({ msg: error.message,success ,role:"warning"});
     }
   }
 );

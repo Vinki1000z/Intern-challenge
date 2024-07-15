@@ -3,8 +3,9 @@
 
 
 remaining work:
-1. seach append
-
+1. profile pic edit
+2. comment modal add link to profile
+3. same 3 point with post area
 
 3.there is error in the div
 import React from "react";

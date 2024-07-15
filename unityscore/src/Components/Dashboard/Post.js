@@ -1,12 +1,20 @@
 import React,{useEffect,useContext, useState} from "react";
 import DashboardContext from "../../createcontext/DashboardContext/DashboardContext";
+import CommentModal from "./CommentModal";
+
 
 export default function Post(props) {  
+  // console.log(props.singlePost)
   const baseUrl = "http://localhost:5000";
   const imagePath = new URL(props.singlePost.image, baseUrl).href;
-  const { LikePost,UnLikePost,IsLikedPost} = useContext(DashboardContext);
+  const { LikePost,UnLikePost,IsLikedPost,AllComments} = useContext(DashboardContext);
   const [currLiked,setCurrLiked]=useState();
   const [likeCount, setLikeCount] = useState(props.singlePost.likesId.length);
+  const [comment,setComment]=useState();
+  const [showCommentModal,setShowCommentModal]=useState(false);
+  const handleClose = () => setShowCommentModal(false);
+  const handleShow = () => setShowCommentModal(true);
+
   const handleLikePost=(PostId)=>{
     LikePost(PostId);
     setCurrLiked(true);
@@ -25,10 +33,15 @@ export default function Post(props) {
       const response = await IsLikedPost(props.singlePost._id);
       setCurrLiked(response);
     };
-
+    const getComment=async()=>{
+      const response=await AllComments(props.singlePost._id);
+      setComment(response.comments);
+      // console.log("this is response",response.comments ,props.singlePost._id);
+    }
     checkIfLiked();
+    getComment();
     // eslint-disable-next-line 
-  }, []);
+  }, [props.singlePost.commentsId.length]);
 
 
   return (
@@ -55,7 +68,7 @@ export default function Post(props) {
                 <div className="position-relative d-inline-block text-white">
                   <img
                     alt="Pic"
-                    src="https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"
+                    src='./img/Dashboard/profilePic.jpg'
                     className="avatar rounded-circle postProfilePic"
                     style={{ width: "58px", height: "58px" }}
                   />
@@ -115,6 +128,7 @@ export default function Post(props) {
                 className="card-img-top"
                 alt="..."
                 style={{ width: "30px", height: "35px" ,cursor:"pointer"}}
+                onClick={handleShow}
               />
               <span className="badge bg-soft-primary text-primary rounded-pill d-inline-flex align-items-center ms-auto" style={{marginTop:"10px"}}>
                 {props.singlePost.commentsId.length}
@@ -130,6 +144,7 @@ export default function Post(props) {
           ></i>
         )}
       </div>
+      {showCommentModal && <CommentModal postId={props.singlePost._id} comments={comment} handleClose={handleClose} show={showCommentModal}/>}
     </>
   );
 }
