@@ -9,6 +9,8 @@ const network = "http://localhost:5000";
   const [Posts, setPost] = useState([]);
   // isLikedPost state
   const [isLiked, setIsLiked] = useState();
+  //  post user specific
+  const [postUser, setPostUser] = useState([]);
 
   //  Section For Post //
 
@@ -56,12 +58,14 @@ const network = "http://localhost:5000";
     const response = await fetch(`${network}/api/post/showPostByUser/${userId}`, {
       method: "GET",
       headers: {
+        "Content-Type": "application/json",
         "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI"
       },
 
     });
     const json = await response.json();
-    console.log(json);
+    setPostUser(json.posts);
+
   }
 
   // 4 . show post by postId
@@ -69,11 +73,41 @@ const network = "http://localhost:5000";
     const response = await fetch(`${network}/api/post/showPostById/${postId}`, {
       method: "GET",
       headers: {
+        "Content-Type": "application/json",
         "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI"
       },
     })
     const json = await response.json();
     console.log(json);
+  }
+
+  // 5. update post
+  const UpdatePost = async (postId,{title,content}) => {
+   
+    const response = await fetch(`${network}/api/post/updatePost/${postId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI"
+      },
+      body:JSON.stringify({title,content})
+    })
+    const json = await response.json();
+    showalert({grole:json.role,gshow:true,gmsg:json.msg})
+
+  }
+
+  //  6. delete a Post
+  const DeletePost = async (postId) => {
+    const response = await fetch(`${network}/api/post/deletePost/${postId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI"
+      },
+    })
+    const json = await response.json();
+    showalert({grole:json.role,gshow:true,gmsg:json.msg})
   }
 
   //  Section For Comments //
@@ -182,9 +216,20 @@ const network = "http://localhost:5000";
   //  Section For the Profile of user //
 
   //  1. finding the user id with the help of userverfication route
-  
+  const FindUserId = async () => {
+    const response = await fetch(`${network}/api/auth/userVerification`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI",
+      },
+    })
+    const json = await response.json();
+    return json.client._id;
+  }
 
-  //  2. get user profile
+  //  2. get user profile info
   const GetUserProfile=async(userId)=>{
     const response = await fetch(`${network}/api/user/userInfo/${userId}`, {
       method: "GET",
@@ -195,7 +240,8 @@ const network = "http://localhost:5000";
       },
     })
     const json = await response.json();
-    console.log(json);
+    // console.log("state",json);
+    return json.user;
   }
 
   //  Section For Search //
@@ -208,12 +254,15 @@ const network = "http://localhost:5000";
     <>
       <DashboardContext.Provider
         value={{
-          // 1. Post(state) , Allpost , CreatePost , ShowPostByUserID , ShowPostByPostId
+          // 1. Post(state) , Allpost , CreatePost , ShowPostByUserID , ShowPostByPostId , UpdatePost , DeletePost
           Posts,
           AllPost,
           CreatePost,
           ShowPostByUserID,
+          postUser,
           ShowPostByPostId,
+          UpdatePost,
+          DeletePost,
 
           //   2. Likepost , unlikepost  , islikde
           LikePost,
@@ -226,8 +275,9 @@ const network = "http://localhost:5000";
           CreateComment,
           DeleteComment,
 
-          // 4. GetUserProfile , 
-          GetUserProfile
+          // 4. GetUserProfile , FindUserId
+          GetUserProfile,
+          FindUserId
         }}
       >
         {props.children}

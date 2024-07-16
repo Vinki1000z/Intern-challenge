@@ -43,7 +43,6 @@ export default function Post(props) {
     // eslint-disable-next-line 
   }, [props.singlePost.commentsId.length]);
 
-
   return (
     <>
       <div
@@ -68,7 +67,7 @@ export default function Post(props) {
                 <div className="position-relative d-inline-block text-white">
                   <img
                     alt="Pic"
-                    src='./img/Dashboard/profilePic.jpg'
+                    src='/img/Dashboard/profilePic.jpg'
                     className="avatar rounded-circle postProfilePic"
                     style={{ width: "58px", height: "58px" }}
                   />
@@ -111,7 +110,7 @@ export default function Post(props) {
               <img
                 className="card-img-top img-fluid"
                 alt="..."
-                src={currLiked?"./img/Dashboard/likeFilled.png" : "./img/Dashboard/like.png"}
+                src={currLiked?"/img/Dashboard/likeFilled.png" : "/img/Dashboard/like.png"}
                 onClick={!currLiked? ()=>handleLikePost(props.singlePost._id):()=>handleUnLikePost(props.singlePost._id)}
                 
                 style={{ width: "30px", height: "33px" ,cursor:"pointer"}}
@@ -124,7 +123,7 @@ export default function Post(props) {
 
             <div className="comments" style={{display:"flex",flexDirection:"column",alignItems:'center'}}>
               <img
-                src="./img/Dashboard/comment.png"
+                src="/img/Dashboard/comment.png"
                 className="card-img-top"
                 alt="..."
                 style={{ width: "30px", height: "35px" ,cursor:"pointer"}}

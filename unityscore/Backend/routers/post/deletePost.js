@@ -52,9 +52,9 @@ router.delete("/deletePost/:postId", userVerification, async (req, res) => {
       );
     }
     success = true;
-    res.json({ msg: "Post removed", updatedUser, success });
+    res.json({ msg: "Post removed", updatedUser, success ,role:"success"});
   } catch (error) {
-    res.json({ msg: error.message, success });
+    res.json({ msg: error.message, success,role:"warning" });
   }
 });
 

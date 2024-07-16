@@ -3,8 +3,8 @@ import Header from "./Header";
 import Card from "./Card";
 import AllPost from "./AllPost";
 import { Routes, Route } from "react-router-dom";
-import UserPost from "./UserPost";
-import Profile from "./Profile";
+// import UserPost from "./UserPost";
+import ProfileDashboard from "./ProfileDashboard";
 
 import HideCardContext from "../../createcontext/HideCardContext/HideCardContext";
 
@@ -22,12 +22,12 @@ export default function Dashboard() {
             <div className="card shadow border-0 mb-7">
               <Routes>
                 {/* Post */}
-                <Route path="/" element={<AllPost />} />
+                <Route exact  path="/"  element={<AllPost />} />
                 {/* user own Post */}
-                <Route path="/yourPost" element={<UserPost />} />
+                {/* <Route exact  path="/yourPost/" element={<UserPost />} /> */}
 
                 {/*  fro profile  */}
-                <Route path="/profile" element={<Profile />} />
+                <Route exact  path="/profile/:userId" element={<ProfileDashboard />} />
               </Routes>
             </div>
           </div>

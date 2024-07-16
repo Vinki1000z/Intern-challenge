@@ -61,7 +61,7 @@ export default function Header() {
                   All Post
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link
                   to="/yourPost"
                   className={`nav-link ${
@@ -70,7 +70,7 @@ export default function Header() {
                 >
                   Your Post
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item">
                 <div
                   className="nav-link"

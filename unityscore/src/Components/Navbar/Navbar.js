@@ -1,7 +1,8 @@
-import React, { useContext,useState } from "react";
+import React, { useContext,useState ,useEffect} from "react";
 import { Link, useLocation } from "react-router-dom";
 import HideCardContext from "../../createcontext/HideCardContext/HideCardContext";
 import SearchModal from "../Dashboard/SearchModal";
+import DashboardContext from "../../createcontext/DashboardContext/DashboardContext";
 
 export default function Navbar() {
   const [show, setShow] = useState(false);
@@ -10,6 +11,15 @@ export default function Navbar() {
   const handleShow = () => setShow(true);
   const location = useLocation();
 
+    const {FindUserId} = useContext(DashboardContext);
+  const [userId, setUserId] = useState();
+    useEffect(()=>{
+    const getUserId=async()=>{
+   setUserId(await FindUserId());
+  }
+  getUserId();
+  // eslint-disable-next-line
+},[])
   const { handleShowCard } = useContext(HideCardContext);
   return (
     <>
@@ -90,7 +100,7 @@ export default function Navbar() {
                   <i className="bi bi-house"></i> Dashboard
                 </Link>
               </li>
-              <li className="nav-item">
+              {/* <li className="nav-item">
                 <Link
                   to="/yourPost"
                   className={`nav-link ${
@@ -99,7 +109,7 @@ export default function Navbar() {
                 >
                   <i className="bi bi-house"></i> Your Post
                 </Link>
-              </li>
+              </li> */}
               <li className="nav-item">
                 <div
                   className="nav-link"
@@ -121,7 +131,7 @@ export default function Navbar() {
               <li className="nav-item">
                 {/* here i need to append the profile info  */}
                 <Link
-                  to="/profile"
+                  to={`/profile/${userId}`}
                   className={`nav-link d-flex align-items-center ${
                     location.pathname === "/profile" ? "active" : ""
                    

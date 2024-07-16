@@ -9,9 +9,9 @@ const userVerification=require("../../middleware/userVerification.js")
 //  api/auth/userVerification
 router.get("/userVerification",userVerification,async(req,res)=>{
     try {
-      let userid = req.user.id;
-      const client = await auth.findById(userid).select("-password");
-      res.send(client);
+      let userId = req.user.id;
+      const client = await auth.findById(userId).select("-password");
+      res.json({msg:"Id of the user",client,success:true});
     }  catch (error) {
       res.json({msg:"Error comes in the Getting Id From The Token",error});
   }

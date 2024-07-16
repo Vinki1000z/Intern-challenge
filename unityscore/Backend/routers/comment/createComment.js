@@ -64,6 +64,7 @@ router.post(
       user.achievements = achievements
       .filter(achievement => newScore >= achievement.score)
       .map(achievement => ({ 
+        // score: achievement.score,
         title: achievement.title, 
         description: achievement.description, 
         date: new Date() 

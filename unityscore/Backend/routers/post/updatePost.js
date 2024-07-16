@@ -58,7 +58,7 @@ router.put(
           new: true,
         }
       );
-      res.json({ msg: "Post is Updated", role: "success" });
+      res.json({ msg: "Post is Updated",UpadtedPost, role: "success" });
     } catch (error) {
       res.json({ msg: error.message,success });
     }

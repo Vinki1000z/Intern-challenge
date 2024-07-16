@@ -12,3 +12,4 @@
       }));
 
     see this also
+    7. in updating the achievemnt s also add the scores in it

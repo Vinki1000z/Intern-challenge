@@ -11,7 +11,7 @@ const Post = require("../../models/post_schema.js");
 let success = false;
 router.get("/showPostByUser/:userId", userVerification, async (req, res) => {
   try {
-    const posts = await Post.find({ userId: req.params.userId }).sort({ updatedAt: -1 });
+    const posts = await Post.find({ userId: req.params.userId }).sort({ createdAt: -1 }).populate("userId", "name");;
 
     // res.send(new_note);
     success = true;
