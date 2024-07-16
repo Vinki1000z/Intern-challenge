@@ -11,6 +11,8 @@ const network = "http://localhost:5000";
   const [isLiked, setIsLiked] = useState();
   //  post user specific
   const [postUser, setPostUser] = useState([]);
+  //  User Info
+  const [userInfo,setUserInfo]=useState([]);
 
   //  Section For Post //
 
@@ -241,9 +243,24 @@ const network = "http://localhost:5000";
     })
     const json = await response.json();
     // console.log("state",json);
-    return json.user;
+    setUserInfo(json.user);
   }
 
+  // 3. update User Name
+  const UpdateUserName = async (userName) => {
+    const response = await fetch(`${network}/api/user/updateUserName`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI",
+      },
+      body: JSON.stringify({ userName: userName }),
+    })
+    const json = await response.json();
+    showalert({grole:json.role,gshow:true,gmsg:json.msg})
+    // console.log(json);
+  }
   //  Section For Search //
 
   // 1. search
@@ -275,9 +292,11 @@ const network = "http://localhost:5000";
           CreateComment,
           DeleteComment,
 
-          // 4. GetUserProfile , FindUserId
+          // 4. GetUserProfile , FindUserId , UpdateUserName , userinfo(state)
           GetUserProfile,
-          FindUserId
+          userInfo,
+          FindUserId,
+          UpdateUserName
         }}
       >
         {props.children}

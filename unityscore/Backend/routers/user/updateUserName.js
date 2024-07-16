@@ -28,10 +28,10 @@ router.put('/updateUserName', userVerification, async (req, res) => {
       user.userName = newUserName;
       await user.save();
       success=true;
-     res.json({ msg: 'Username changed' ,success,user});
+     res.json({ msg: 'Username changed' ,success,user,role:"success"});
     } catch (error) {
       console.error(error);
-      res.json({ msg: error.message,success });
+      res.json({ msg: error.message,success,role:"warning" });
     }
   });
   

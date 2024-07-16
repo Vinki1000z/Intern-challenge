@@ -5,16 +5,20 @@ import EditUserName from "./EditUserName";
 import DashboardContext from "../../createcontext/DashboardContext/DashboardContext";
 
 export default function ProfileView(props) {
-  const { FindUserId, GetUserProfile } = useContext(DashboardContext);
+  const { FindUserId, GetUserProfile ,userInfo } = useContext(DashboardContext);
   const [show, setShow] = useState(false);
   // const [userId, setUserId] = useState();
   const [match, setMatch] = useState();
-  const [userProfile, setUserProfile] = useState({});
+  // const [userProfile, setUserProfile] = useState({});
   const { style } = true;
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const handleUserNameEdit=()=>{
+    // console.log("clicked");
+    handleShow();
+  }
   useEffect(() => {
     const fetchData = async () => {
       const fetchedUserId = await FindUserId();
@@ -25,15 +29,14 @@ export default function ProfileView(props) {
         setMatch(false);
       }
 
-      const fetchedUserProfile = await GetUserProfile(props.userId);
-      setUserProfile(fetchedUserProfile);
-       // eslint-disable-next-line
+     GetUserProfile(props.userId);
+
     };
 
     fetchData();
-
      // eslint-disable-next-line
-  }, [props.userId]);
+  }, [props.userId,userInfo]);
+  
 
   return (
     <>
@@ -58,13 +61,15 @@ export default function ProfileView(props) {
 
               <span className="position-absolute bottom-2 end-2 transform translate-x-1/2 translate-y-1/2 border-2 border-solid border-current w-3 h-3 bg-success rounded-circle"></span>
             </div>
-
+            {
+              match && 
             <i
               className="fas fa-edit"
               style={{ position: "absolute", cursor: "pointer" }}
               variant="primary"
-              onClick={handleShow}
+              onClick={handleUserNameEdit}
             ></i>
+            }
           </div>
           <div
             style={{
@@ -77,21 +82,21 @@ export default function ProfileView(props) {
               className="d-block large-font mb-0"
               style={{ fontSize: "20px" }}
             >
-              {userProfile.name}
+              {userInfo.name}
             </span>
             <span
               className="d-block text-muted font-regular mb-0"
               style={{ fontSize: "16px" }}
             >
-              {userProfile.userName}
+              {userInfo.userName}
             </span>
           </div>
         </div>
         {/* score view */}
         <Card
           style={{ style }}
-          scores={userProfile.scores}
-          achievements={userProfile.achievements}
+          scores={userInfo.scores}
+          achievements={userInfo.achievements}
         />
         {/* your post */}
         <UserPost style={{ style }} userId={props.userId}  match={match}/>
