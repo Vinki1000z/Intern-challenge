@@ -2,18 +2,19 @@ import React, { useState } from "react";
 import Alertcontext from "./AlertContext";
 
 function Alertstate(props) {
-  const [role, setrole] = useState("");
-  const [msg, setmsg] = useState("");
-  const [show, setshow] = useState(false);
+  const [role, setRole] = useState("");
+  const [msg, setMsg] = useState("");
+  const [show, setShow] = useState(false);
 
   const showalert = (alert) => {
     const { grole, gmsg, gshow } = alert;
-    setrole(grole);
-    setmsg(gmsg);
-    setshow(gshow);
+    setRole(grole);
+    setMsg(gmsg);
+    setShow(gshow);
+
     // Automatically hide the alert after a certain time (optional)
     setTimeout(() => {
-      setshow(false);
+      setShow(false);
     }, 3000); // 3 seconds
   };
 
@@ -22,6 +23,7 @@ function Alertstate(props) {
       <Alertcontext.Provider value={{ showalert }}>
         {show && (
           <div
+            key={msg} // Use a unique key for each alert
             className={`alert alert-${role} alert-dismissible position-fixed top-0 start-50 translate-middle-x mt-3`}
             style={{ zIndex: 1050, width: '50%' }}
             role="alert"
@@ -32,7 +34,7 @@ function Alertstate(props) {
               className="btn-close"
               data-bs-dismiss="alert"
               aria-label="Close"
-              onClick={() => setshow(false)}
+              onClick={() => setShow(false)}
             ></button>
           </div>
         )}

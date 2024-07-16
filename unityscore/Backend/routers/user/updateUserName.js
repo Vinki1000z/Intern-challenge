@@ -16,13 +16,13 @@ router.put('/updateUserName', userVerification, async (req, res) => {
       // Check if the new username already exists
       const existingUser = await User.findOne({ userName: newUserName });
       if (existingUser) {
-        return res.json({ msg: 'Username already taken' ,success});
+        return res.json({ msg: 'Username already taken' ,success,role:"warning"});
       }
   
       // Update the user's username
       const user = await User.findById(userId);
       if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+        return res.status(404).json({ message: 'User not found' ,role:"warning"});
       }
   
       user.userName = newUserName;

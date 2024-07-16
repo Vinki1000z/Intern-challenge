@@ -11,15 +11,18 @@ export default function Navbar() {
   const handleShow = () => setShow(true);
   const location = useLocation();
 
-    const {FindUserId} = useContext(DashboardContext);
+  const { FindUserId, GetUserProfile , userInfo} = useContext(DashboardContext);
   const [userId, setUserId] = useState();
-    useEffect(()=>{
-    const getUserId=async()=>{
-   setUserId(await FindUserId());
-  }
-  getUserId();
-  // eslint-disable-next-line
-},[])
+  useEffect(() => {
+    const fetchData = async () => {
+      setUserId(await FindUserId());
+     GetUserProfile(userId);
+
+    };
+
+    fetchData();
+     // eslint-disable-next-line
+  }, [userInfo]);
   const { handleShowCard } = useContext(HideCardContext);
   return (
     <>
@@ -149,10 +152,10 @@ export default function Navbar() {
                   </div>
                   <div>
                     <span className="d-block text-sm font-semibold">
-                      Marie Claire
+                      {userInfo.name}
                     </span>
                     <span className="d-block text-xs text-muted font-regular">
-                      Paris, FR
+                      {userInfo.userName}
                     </span>
                   </div>
                 </Link>

@@ -13,6 +13,8 @@ const network = "http://localhost:5000";
   const [postUser, setPostUser] = useState([]);
   //  User Info
   const [userInfo,setUserInfo]=useState([]);
+  //  UsersByName
+  const [userNames,setUserNames]=useState([]);
 
   //  Section For Post //
 
@@ -46,11 +48,12 @@ const network = "http://localhost:5000";
       body: formData
     });
   
-    if (!response.ok) {
-      throw new Error(`Error: ${response.status}`);
-    }
+    // if (!response.ok) {
+    //   throw new Error(`Error: ${response.status}`);
+    // }
   
     const json = await response.json();
+    // console.log(json);
     setPost(Posts.concat(json.post));
     showalert({grole:json.role,gshow:true,gmsg:json.msg})
   };
@@ -264,14 +267,29 @@ const network = "http://localhost:5000";
   //  Section For Search //
 
   // 1. search
+  const SearchByName=async(userName)=>{
+    const response = await fetch(`${network}/api/user/allUsersByName?name=${userName} `, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI",
+      },
+    })
+    const json = await response.json();
+    setUserNames(json.users);
+  }
 
+  const ClearUserNames=()=>{
+    setUserNames([])
+}
 
   return (
  
     <>
       <DashboardContext.Provider
         value={{
-          // 1. Post(state) , Allpost , CreatePost , ShowPostByUserID , ShowPostByPostId , UpdatePost , DeletePost
+          // 1. Post(state) , Allpost , CreatePost , ShowPostByUserID , ShowPostByPostId , UpdatePost , DeletePost ,postUser(state)
           Posts,
           AllPost,
           CreatePost,
@@ -296,7 +314,12 @@ const network = "http://localhost:5000";
           GetUserProfile,
           userInfo,
           FindUserId,
-          UpdateUserName
+          UpdateUserName,
+
+          // 5. Search , usernames(state)
+          SearchByName,
+          userNames,
+          ClearUserNames
         }}
       >
         {props.children}

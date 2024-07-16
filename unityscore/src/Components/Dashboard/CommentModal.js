@@ -115,7 +115,7 @@ export default function CommentModal(props) {
                         )}
                       </div>
                       {/* Comment Text */}
-                      <div>{comment.content}</div>
+                      <div className="mx-3">{comment.content}</div>
                     </li>
                   ))}
                 </ul>
