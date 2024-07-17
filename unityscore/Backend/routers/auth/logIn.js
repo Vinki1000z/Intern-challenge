@@ -23,11 +23,6 @@ let success = false;
 router.post(
   "/logIn",
   [
-    // Validate password
-    body("password")
-      .isLength({ min: 8 })
-      .withMessage("Password must be at least 8 characters long"),
-
     // Validate email
     body("email").isEmail().withMessage("Email is not valid"),
   ],
@@ -36,14 +31,14 @@ router.post(
     if (!errors.isEmpty()) {
       let triversing = errors.array();
       let error = triversing.map((err) => err.msg);
-      return res.status(400).json({ msg: error, success });
+      return res.status(400).json({ msg: error, success ,role:"warning" });
     }
 
     try {
       // checking for the unique email address
       let user = await auth.findOne({ email: req.body.email });
       if (!user) {
-        return res.json({ msg: "Login With Correct Parameters", success });
+        return res.json({ msg: "Login With Correct Parameters", success ,role:"warning"});
       }
 
       // checking the password
@@ -53,6 +48,7 @@ router.post(
         return res.json({
           msg: "PLease Login With Correct Parameters",
           success,
+          role:"warning"
         });
       }
       //   Jwt Token Session
@@ -66,9 +62,9 @@ router.post(
 
       //    Marking The Succes True
       success = true;
-      res.json({ msg: token, success });
+      res.json({ msg: "Welocome Back ! ",token, success , role:"success" });
     } catch (error) {
-      return res.json({ msg:error.message, success });
+      return res.json({ msg:error.message, success ,role:"warning" });
     }
   }
 );

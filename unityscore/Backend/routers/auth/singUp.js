@@ -32,7 +32,7 @@ router.post(
   "/signUp",
   [
     // Validate name
-    body("name").notEmpty().withMessage("Name is      required"),
+    body("name").notEmpty().withMessage("Name is required"),
     
     // Validate password
     body("password")
@@ -47,14 +47,14 @@ router.post(
     if (!errors.isEmpty()) {
       let triversing = errors.array();
       let error = triversing.map((err) => err.msg);
-      return res.status(400).json({ msg: error, success });
+      return res.status(400).json({ msg: error, success ,role:"warning"});
     }
 
     try {
       // checking for the unique email address
       let user = await auth.findOne({ email: req.body.email });
       if (user) {
-        return res.json({ msg: "User Exist, Try New Email Id", success });
+        return res.json({ msg: "User Exist, Try New Email Id", success ,role:"warning"});
       }
       let hash_pass = await bcrypt.hash(req.body.password, saltRounds);
       const userName = generateUniqueUserName(req.body.name);
@@ -77,7 +77,7 @@ router.post(
       };
 
       const token = jwt.sign(data, jwt_word);
-      res.json({ msg: token, success });
+      res.json({ msg:"Account Created", token, success,role:"warning" });
     } catch (error) {
       return res.status(400).json({ msg: error.message, success });
     }

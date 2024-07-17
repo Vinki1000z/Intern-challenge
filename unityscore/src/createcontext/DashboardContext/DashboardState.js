@@ -29,7 +29,7 @@ const network = "http://localhost:5000";
       headers: {
         "Content-Type": "application/json",
         "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI",
+          localStorage.getItem('token'),
       },
     });
     const data = await response.json();
@@ -127,7 +127,7 @@ const network = "http://localhost:5000";
       headers: {
         "Content-Type": "application/json",
         "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI",
+          localStorage.getItem('token'),
       },
     });
     const data=await response.json();
@@ -141,7 +141,7 @@ const network = "http://localhost:5000";
       headers: {
         "Content-Type": "application/json",
         "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI",
+          localStorage.getItem('token'),
       },
       body:JSON.stringify(content)
       });
@@ -161,7 +161,7 @@ const network = "http://localhost:5000";
       headers: {
         "Content-Type": "application/json",
         "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI",
+          localStorage.getItem('token'),
       },
     });
     const json=await response.json();
@@ -183,7 +183,7 @@ const network = "http://localhost:5000";
       headers: {
         "Content-Type": "application/json",
         "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI",
+          localStorage.getItem('token'),
       },
     });
     const data = await response.json();
@@ -199,7 +199,7 @@ const network = "http://localhost:5000";
       headers: {
         "Content-Type": "application/json",
         "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI",
+          localStorage.getItem('token'),
       },
     });
     const data = await response.json();
@@ -213,7 +213,7 @@ const network = "http://localhost:5000";
       headers: {
         "Content-Type": "application/json",
         "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI",
+          localStorage.getItem('token'),
       },
     });
     const data = await response.json();
@@ -230,7 +230,7 @@ const network = "http://localhost:5000";
       headers: {
         "Content-Type": "application/json",
         "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI",
+          localStorage.getItem('token'),
       },
     })
     const json = await response.json();
@@ -246,7 +246,7 @@ const network = "http://localhost:5000";
       headers: {
         "Content-Type": "application/json",
         "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI",
+          localStorage.getItem('token'),
       },
     })
     const json = await response.json();
@@ -261,7 +261,7 @@ const network = "http://localhost:5000";
       headers: {
         "Content-Type": "application/json",
         "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI",
+          localStorage.getItem('token'),
       },
       body: JSON.stringify({ userName: userName }),
     })
@@ -276,7 +276,7 @@ const network = "http://localhost:5000";
       headers: {
         "Content-Type": "application/json",
         "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI",
+          localStorage.getItem('token'),
       },
     })
     const json = await response.json();
@@ -291,7 +291,7 @@ const network = "http://localhost:5000";
       headers: {
         "Content-Type": "application/json",
         "auth-token":
-          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI",
+          localStorage.getItem('token'),
       },
     })
     const json = await response.json();

@@ -3,8 +3,10 @@ import { Link, useLocation } from "react-router-dom";
 import HideCardContext from "../../createcontext/HideCardContext/HideCardContext";
 import SearchModal from "../Dashboard/SearchModal";
 import DashboardContext from "../../createcontext/DashboardContext/DashboardContext";
+import IsAuthContext from "../../createcontext/IsAuth/IsAuthContext";
 
 export default function Navbar() {
+  const {auth ,handleAuth}=useContext(IsAuthContext)
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -13,6 +15,9 @@ export default function Navbar() {
 
     const {FindUserId,CurrUserProfile,currUser,userId} = useContext(DashboardContext);
     useEffect(()=>{
+      if(auth){
+
+      
     const getUserId=async()=>{
    FindUserId();
 
@@ -23,13 +28,19 @@ export default function Navbar() {
   // console.log("here");
   }
   getUserId();
+}
   // eslint-disable-next-line
-},[currUser,userId])
+},[currUser,userId,auth])
   const { handleShowCard } = useContext(HideCardContext);
+  const handleOnLogOut=()=>{
+    localStorage.removeItem('token');
+
+    handleAuth(false);
+  }
   return (
     <>
-    {
-      currUser && (
+    { auth &&
+       currUser && (
         <>
 
         
@@ -102,7 +113,7 @@ export default function Navbar() {
             <ul className="navbar-nav">
               <li className="nav-item">
                 <Link
-                  to="/"
+                  to="/home"
                   className={`nav-link ${
                     location.pathname === "/" ? "active" : ""
                   }`} onClick={()=>handleShowCard(true)}
@@ -170,9 +181,9 @@ export default function Navbar() {
               </li>
               {/* logout */}
               <li className="nav-item">
-                <a className="nav-link" href="/">
-                  <i className="bi bi-box-arrow-left"></i> Logout
-                </a>
+                <Link className="nav-link" onClick={handleOnLogOut} to="/login">
+                  <i className="bi bi-box-arrow-left" ></i> Logout
+                </Link>
               </li>
             </ul>
           </div>

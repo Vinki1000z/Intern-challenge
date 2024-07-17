@@ -65,6 +65,9 @@ app.use('/api/comment', require("./routers/comment/getComment.js"));
 // 3.2 Delete comments for a post
 app.use('/api/comment', require("./routers/comment/deleteComment.js"));
 
+// 3.3 
+app.use('/api/comment', require("./routers/comment/postComments.js"));
+
 // 3 Like //
 
 // 3.1 Like a post
