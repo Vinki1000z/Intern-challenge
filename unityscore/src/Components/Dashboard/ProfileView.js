@@ -5,7 +5,7 @@ import EditUserName from "./EditUserName";
 import DashboardContext from "../../createcontext/DashboardContext/DashboardContext";
 
 export default function ProfileView(props) {
-  const { FindUserId, GetUserProfile ,userInfo } = useContext(DashboardContext);
+  const { userId, GetUserProfile ,userInfo } = useContext(DashboardContext);
   const [show, setShow] = useState(false);
   // const [userId, setUserId] = useState();
   const [match, setMatch] = useState();
@@ -21,16 +21,12 @@ export default function ProfileView(props) {
   }
   useEffect(() => {
     const fetchData = async () => {
-      const fetchedUserId = await FindUserId();
-      const userId=fetchedUserId;
       if (props.userId === userId) {
         setMatch(true);
       } else {
         setMatch(false);
       }
-
      GetUserProfile(props.userId);
-
     };
 
     fetchData();
@@ -40,7 +36,10 @@ export default function ProfileView(props) {
 
   return (
     <>
-      <div className="container">
+    {
+      userInfo && (
+        <>
+        <div className="container">
         {/*  profile view */}
         <div
           className="container profile my-6 "
@@ -108,6 +107,11 @@ export default function ProfileView(props) {
           userId={props.userId}
         />
       )}
+
+        </>
+      )
+    }
+      
     </>
   );
 }

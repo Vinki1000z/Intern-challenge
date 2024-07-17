@@ -15,7 +15,10 @@ const network = "http://localhost:5000";
   const [userInfo,setUserInfo]=useState([]);
   //  UsersByName
   const [userNames,setUserNames]=useState([]);
-
+  //curr user
+  const [currUser,setCurrUser]=useState([]);
+  // user id
+  const [userId,setUserId]=useState([]);
   //  Section For Post //
 
   //   1. For showing All Post
@@ -231,7 +234,9 @@ const network = "http://localhost:5000";
       },
     })
     const json = await response.json();
-    return json.client._id;
+
+
+    setUserId(json.client._id);
   }
 
   //  2. get user profile info
@@ -263,6 +268,19 @@ const network = "http://localhost:5000";
     const json = await response.json();
     showalert({grole:json.role,gshow:true,gmsg:json.msg})
     // console.log(json);
+  }
+  // 4.
+  const CurrUserProfile=async(userId)=>{
+    const response = await fetch(`${network}/api/user/userInfo/${userId}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token":
+          "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjY4YzIyYTA1ZGM0NDRhZDU0YmYyYmU2In0sImlhdCI6MTcyMDk2Njc3MX0.Bl95qcYeZEXqpGD88fCmJZ3IaVQfshRofyjRlv3-SxI",
+      },
+    })
+    const json = await response.json();
+    setCurrUser(json.user)
   }
   //  Section For Search //
 
@@ -314,8 +332,11 @@ const network = "http://localhost:5000";
           GetUserProfile,
           userInfo,
           FindUserId,
+          userId,
           UpdateUserName,
-
+          CurrUserProfile,
+          currUser,
+          
           // 5. Search , usernames(state)
           SearchByName,
           userNames,

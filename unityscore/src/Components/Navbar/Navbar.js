@@ -11,21 +11,28 @@ export default function Navbar() {
   const handleShow = () => setShow(true);
   const location = useLocation();
 
-  const { FindUserId, GetUserProfile , userInfo} = useContext(DashboardContext);
-  const [userId, setUserId] = useState();
-  useEffect(() => {
-    const fetchData = async () => {
-      setUserId(await FindUserId());
-     GetUserProfile(userId);
+    const {FindUserId,CurrUserProfile,currUser,userId} = useContext(DashboardContext);
+    useEffect(()=>{
+    const getUserId=async()=>{
+   FindUserId();
 
-    };
-
-    fetchData();
-     // eslint-disable-next-line
-  }, [userInfo]);
+    console.log(userId);
+    console.log("here");
+    CurrUserProfile(userId);
+  
+  console.log("here");
+  }
+  getUserId();
+  // eslint-disable-next-line
+},[currUser,userId])
   const { handleShowCard } = useContext(HideCardContext);
   return (
     <>
+    {
+      currUser && (
+        <>
+
+        
       <nav
         className="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg"
         id="navbarVertical"
@@ -150,12 +157,13 @@ export default function Navbar() {
                       <span className="position-absolute bottom-2 end-2 transform translate-x-1/2 translate-y-1/2 border-2 border-solid border-current w-3 h-3 bg-success rounded-circle"></span>
                     </div>
                   </div>
+                  
                   <div>
                     <span className="d-block text-sm font-semibold">
-                      {userInfo.name}
+                    {currUser.name}
                     </span>
                     <span className="d-block text-xs text-muted font-regular">
-                      {userInfo.userName}
+                    {currUser.userName}
                     </span>
                   </div>
                 </Link>
@@ -171,6 +179,11 @@ export default function Navbar() {
         </div>
       {show && <SearchModal show={show} handleClose={handleClose}/>}
       </nav>
+      </>
+      )
+    }
     </>
+    
   );
+  
 }
