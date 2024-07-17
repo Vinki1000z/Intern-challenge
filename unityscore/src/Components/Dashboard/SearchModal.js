@@ -1,7 +1,7 @@
 import React,{useState,useContext,useEffect} from "react";
 import Modal from "react-bootstrap/Modal";
 import DashboardContext from "../../createcontext/DashboardContext/DashboardContext";
-
+import { Link } from "react-router-dom";
 export default function SearchModal(props) {
   const [searchInput, setSearchInput] = useState("");
   const { SearchByName, userNames  ,ClearUserNames} = useContext(DashboardContext);
@@ -23,6 +23,9 @@ export default function SearchModal(props) {
     props.handleClose();
     setSearchInput("");
     ClearUserNames();
+  }
+  const handleOnLink=()=>{
+    props.handleClose();
   }
   return (
     <>
@@ -53,7 +56,8 @@ export default function SearchModal(props) {
                   key={user._id}
                   className="nav-item mx-6"
                   style={{ borderBottom: "2px solid rgb(236, 238, 243)" }}
-                >
+                > 
+                <Link  to={`/profile/${user._id}`} onClick={handleOnLink}>
                   <div
                     className="nav-link d-flex align-items-center my-2"
                     style={{ padding: "0px" }}
@@ -79,6 +83,7 @@ export default function SearchModal(props) {
                       </span>                      
                     </div>
                   </div>
+                  </Link>
                 </li>
               ))}
             </ul>

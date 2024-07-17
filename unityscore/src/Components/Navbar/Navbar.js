@@ -16,11 +16,11 @@ export default function Navbar() {
     const getUserId=async()=>{
    FindUserId();
 
-    console.log(userId);
-    console.log("here");
+    // console.log(userId);
+    // console.log("here");
     CurrUserProfile(userId);
   
-  console.log("here");
+  // console.log("here");
   }
   getUserId();
   // eslint-disable-next-line
@@ -73,7 +73,7 @@ export default function Navbar() {
                 <div className="avatar-parent-child">
                   <img
                     alt="Pic"
-                    src="https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"
+                    src="/img/Dashboard/profilrPic.jpg"
                     className="avatar avatar- rounded-circle"
                   />
                   <span className="avatar-child avatar-badge bg-success"></span>
@@ -143,7 +143,7 @@ export default function Navbar() {
                 <Link
                   to={`/profile/${userId}`}
                   className={`nav-link d-flex align-items-center ${
-                    location.pathname === "/profile" ? "active" : ""
+                    location.pathname === `/profile/${userId}` ? "active" : ""
                    
                   }`}  onClick={()=>handleShowCard(false)}
                 >
@@ -151,7 +151,7 @@ export default function Navbar() {
                     <div className="position-relative d-inline-block text-white">
                       <img
                         alt="Pic"
-                        src="https://images.unsplash.com/photo-1548142813-c348350df52b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=3&w=256&h=256&q=80"
+                        src="/img/Dashboard/profilePic.jpg"
                         className="avatar rounded-circle"
                       />
                       <span className="position-absolute bottom-2 end-2 transform translate-x-1/2 translate-y-1/2 border-2 border-solid border-current w-3 h-3 bg-success rounded-circle"></span>

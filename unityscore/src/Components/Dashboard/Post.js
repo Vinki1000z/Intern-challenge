@@ -1,7 +1,7 @@
 import React,{useEffect,useContext, useState} from "react";
 import DashboardContext from "../../createcontext/DashboardContext/DashboardContext";
 import CommentModal from "./CommentModal";
-
+import { Link } from "react-router-dom";
 
 export default function Post(props) {  
   // console.log(props.singlePost)
@@ -62,7 +62,7 @@ export default function Post(props) {
         >
           {/* Header */}
           <div className="postHeader">
-            <a href="/" className="nav-link d-flex align-items-center">
+            <Link to={`/profile/${props.singlePost.userId._id}`} className="nav-link d-flex align-items-center">
               <div className="me-4">
                 <div className="position-relative d-inline-block text-white">
                   <img
@@ -85,7 +85,7 @@ export default function Post(props) {
                   Paris, FR
                 </span> */}
               </div>
-            </a>
+            </Link>
           </div>
           {/* Body */}
           <div className="card-body">
